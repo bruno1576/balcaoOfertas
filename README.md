@@ -29,3 +29,9 @@ POST | localhost:3001/listaoferta?page=1 | Restorna uma lista paginada de todas 
 POST |localhost:3001/oferta | Cria uma nova oferta|{"idTipoMoeda": 1,"idMoeda":2,"precoUnitario":1,"quantidade": 1}
 POST |localhost:3001/delete|faz o softdelete da oferta, setando false no campo de oferta ativa|	{"idOferta": 3,"idUsuario":1}
 
+
+####O que eu melhoraria no projeto:
+
+A princípio falando do código, acredito que um começo para melhorar o código seria refatorar adicionando mais conceitos do clean arquiteture, criando por exemplo classes e elementos de dados DTO para reduzir ao máximo o acoplamento. Outro ponto essencial seria ampliar muito a camada de testes, criando testes unitários para o máximo de cenários possíveis. Partindo para o lado da infraestrutura, a primeira mudança que eu faria seria trocar o banco de dados de SQlite para um postgresql por exemplo, para ter mais escalabilidade, robustez e ganho nos cenários de concorrência, além disso, seria interessante trabalhar com um banco de escrita e outro de leitura com replica de dados, para evitar lock em picos de acesso e uso. Feito isso, acredito que é essencial investir na implementação de ferramentas de LOG e monitoramento, como datadog, kinesis. A depender da evolução do sistema, talvez seja necessário a implementação de uma ferramenta de mensageria para organizar a compra de ofertas e venda. Acredito que outra adição que iria acrescentar muito na manutenção e evolução do sistema, é trabalhar com containers.
+
+
