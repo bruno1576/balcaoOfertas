@@ -94,7 +94,7 @@ module.exports = {
         idMoeda: {
           allowNull: false,
           type: Sequelize.INTEGER,
-          references: {model: 'moedas', key: 'id'}
+          unique: false
         },
         ofertaAtiva: {
           allowNull: false,
@@ -104,7 +104,7 @@ module.exports = {
         dataHora: {
           allowNull: false,
           type: Sequelize.DATE,
-          unique: false
+          unique: false,
         },
         precoUnitario: {
           allowNull: false,

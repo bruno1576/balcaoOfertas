@@ -3,6 +3,7 @@ import { Entity } from "../../core/domain/Entity"
 // 
 
 type UsuarioProps = {
+    id?: number;
     nome: string;
     login: string;
     senha: string;
@@ -16,6 +17,5 @@ export class Usuario extends Entity<UsuarioProps> {
         const usuario = new Usuario({...props}, id);
         return usuario;
     }
-
 
 }

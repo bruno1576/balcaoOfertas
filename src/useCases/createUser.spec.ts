@@ -1,17 +1,18 @@
-import { Usuario } from "../domain/entities/usuario";
+import { CriaNovoUsuario } from "./createUser";
+import { UsuarioRepositoryTest } from "../../tests/repository/usuarioRepositoryTest";
 
 
-type CriaNovoUsuarioRequest = {
-    nome: string;
-    login: string;
-    senha: string;
-}
-
-export class CriaNovoUsuario {
-    handle({nome, login, senha}: CriaNovoUsuarioRequest  ){
-        const novoUsuario = Usuario.create({nome,login,senha});
-
-        return novoUsuario;
+describe('criação do usuario useCase',() => {
+    it('Deve criar um usuario', async() =>{
+        const repositoryTeste = new UsuarioRepositoryTest()
+        const sut = new CriaNovoUsuario(repositoryTeste);
+        const response = await sut.handle({
+            nome: 'teste',
+            login: 'TesteNovoUsuario',
+            senha: 'SenhaTeste'
+        })
+        expect(response).toBeTruthy()
     }
-    
-}
+    )
+
+});
