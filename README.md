@@ -1,6 +1,7 @@
 # Balcao de Ofertas
 #####Desafio técnico
 ####Como executar
+
 Para instalar as dependencias, execute:
 > npm i
 
