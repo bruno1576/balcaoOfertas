@@ -1,22 +1,26 @@
-import express from "express";
-import  db from './database/sequelize/models';
+import express, { Request, Response, NextFunction} from 'express'
+import { router } from '../interface/routes';
+import cors from 'cors'
 
 const app = express();
 
-app.get('/', (req, res) => {
+app.use(express.json());
 
- async function teste_parara(){
-  const cart =  await db.carteira.create({ 
-    idUsuario:2,
-    nome: '12345',
- });
-  }
-  teste();
+app.use(cors());
+
+app.use(router);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    if(err instanceof Error){
+        return res.status(400).json({
+            error: err.message
+        })
+    }
+    return res.status(500).json({
+        status: 'error',
+        message: 'intenal server error'
+    })
 
 })
 
-db.sequelize.sync().then(() => {
-  app.listen(3000, () => {
-      console.log(`App listening on port ${3000}`)
-  })
-})
+app.listen(3001, ()=> console.log('servidor'))

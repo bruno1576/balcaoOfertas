@@ -7,7 +7,7 @@ import {
 interface OfertaAttributes {
     id: number;
     idMoeda: number;
-    ativa: boolean;
+    ofertaAtiva: boolean;
     dataHora: Date;
     precoUnitario: number;
     quantidade: number;
@@ -18,10 +18,11 @@ interface OfertaAttributes {
       implements OfertaAttributes{
       id!: number;
       idMoeda!: number;
-      ativa!: boolean;
+      ofertaAtiva!: boolean;
       dataHora!: Date;
       precoUnitario!: number;
       quantidade!: number;
+
     };
     
     Oferta.init({
@@ -32,30 +33,27 @@ interface OfertaAttributes {
     },
     idMoeda: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'moeda',
-        key: 'id'
-      }, 
+      allowNull: false
     },
-    ativa: {
+    ofertaAtiva: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: false
     },
     dataHora: {
       type: DataTypes.DATE,
       allowNull: false,
     },
     precoUnitario: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
-      },
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
     quantidade: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
-      },
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
   },  {
     sequelize,
-    modelName: 'oferta',
+    modelName: 'ofertas',
     timestamps: false
   });
 

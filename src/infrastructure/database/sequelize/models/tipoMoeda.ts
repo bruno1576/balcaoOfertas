@@ -31,7 +31,7 @@ interface TipoMoedaAttributes {
 
   },  {
     sequelize,
-    modelName: 'TipoMoeda',
+    modelName: 'tipoMoeda',
     timestamps: false
   });
 

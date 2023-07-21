@@ -8,7 +8,7 @@ interface MoedaAttributes {
     id: number;
     idTipoMoeda: number;
     idCarteira: number;
-    quantidade: string;
+    quantidade: number;
   
   }
   module.exports = (sequelize: any, DataTypes: any) => {
@@ -17,7 +17,8 @@ interface MoedaAttributes {
       id!: number;
       idTipoMoeda!: number;
       idCarteira!: number;
-      quantidade!: string;
+      quantidade!: number;
+
     };
     
     Moeda.init({
@@ -33,8 +34,6 @@ interface MoedaAttributes {
         model: 'tipoMoeda',
         key: 'id'
       }, 
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     },
     
     idCarteira: {
@@ -43,8 +42,6 @@ interface MoedaAttributes {
         model: 'carteira',
         key: 'id'
       }, 
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     },
     quantidade: {
       type: DataTypes.FLOAT,

@@ -10,7 +10,7 @@ export abstract class Entity<T> {
   }
   constructor(props: T, id?: number){
     this.props = props;
-    this._id = id ?? crypto.randomInt(0);
+    this._id = id ?? crypto.randomInt(1);
     
   }
 }
