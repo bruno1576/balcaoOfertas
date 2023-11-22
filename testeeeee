@@ -24,47 +24,43 @@ function verificaColunas(sheet: xlsx.WorkSheet): boolean {
   return true;
 }
 
-app.post(
-  "/upload",
-  upload.single("excelFile"),
-  (req: Request, res: Response) => {
-    try {
-      if (!req.file) {
-        return res.status(400).send("Nenhum arquivo enviado.");
+app.post("/upload", upload.single("file"), (req: Request, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(400).send("Nenhum arquivo enviado.");
+    }
+
+    // Verifique se req.file.originalname existe antes de acessá-lo
+    const fileName = req.file.originalname || "Desconhecido";
+
+    const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
+
+    workbook.SheetNames.forEach((sheetName) => {
+      const sheet = workbook.Sheets[sheetName];
+
+      // Verifique se as colunas A, B, C e D existem na folha do Excel
+      if (verificaColunas(sheet)) {
+        console.log(
+          `O arquivo ${fileName} possui as colunas A, B, C e D na folha ${sheetName}.`
+        );
+      } else {
+        console.log(
+          `O arquivo ${fileName} não possui todas as colunas A, B, C e D na folha ${sheetName}.`
+        );
       }
 
-      // Verifique se req.file.originalname existe antes de acessá-lo
-      const fileName = req.file.originalname || "Desconhecido";
+      const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
 
-      const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
+      console.log(`Conteúdo da folha ${sheetName}:`);
+      console.log(data);
+    });
 
-      workbook.SheetNames.forEach((sheetName) => {
-        const sheet = workbook.Sheets[sheetName];
-
-        // Verifique se as colunas A, B, C e D existem na folha do Excel
-        if (verificaColunas(sheet)) {
-          console.log(
-            `O arquivo ${fileName} possui as colunas A, B, C e D na folha ${sheetName}.`
-          );
-        } else {
-          console.log(
-            `O arquivo ${fileName} não possui todas as colunas A, B, C e D na folha ${sheetName}.`
-          );
-        }
-
-        const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-
-        console.log(`Conteúdo da folha ${sheetName}:`);
-        console.log(data);
-      });
-
-      return res.status(200).send("Arquivo processado com sucesso.");
-    } catch (error) {
-      console.error("Erro ao processar o arquivo:", error);
-      return res.status(500).send("Erro interno do servidor.");
-    }
+    return res.status(200).send("Arquivo processado com sucesso.");
+  } catch (error) {
+    console.error("Erro ao processar o arquivo:", error);
+    return res.status(500).send("Erro interno do servidor.");
   }
-);
+});
 
 app.get("/download", (req, res) => {
   const filePath = path.join(__dirname, "../planilha.xlsx");
